@@ -1,9 +1,10 @@
 const app = require("./app");
 const mongoose = require("mongoose");
+const dbUrl = process.env.MONGODB_URI;
 
 mongoose
   .connect(
-    "mongodb://localhost/express-book-api",
+    dbUrl,
     { useNewUrlParser: true }
   )
   .then(() => {
