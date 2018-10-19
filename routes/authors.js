@@ -39,7 +39,10 @@ router.put(
       req.body,
       { new: true }
     );
-    res.status(200).json(changedAuthor);
+    res.status(200).json({
+      ...changedAuthor.toJSON(),
+      message: "Updated succesfully"
+    });
   })
 );
 
@@ -47,7 +50,7 @@ router.delete(
   "/:id",
   asyncWrapper(async (req, res, next) => {
     await Author.findByIdAndDelete(req.params.id);
-    res.status(200).write({ message: "The author's profile has been deleted" });
+    res.status(200).json({ message: "The author's profile has been deleted" });
   })
 );
 

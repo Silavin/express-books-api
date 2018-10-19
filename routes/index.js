@@ -7,7 +7,7 @@ const asyncWrapper = require("../util/asyncWrapper");
 router.get(
   "/",
   asyncWrapper(async (req, res, next) => {
-    res.status(200).json({ message: "hello express-books-api" });
+    res.status(200).json({ message: "Hello express-books-api" });
   })
 );
 

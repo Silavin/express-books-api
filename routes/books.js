@@ -8,8 +8,7 @@ router.get(
   "/",
   asyncWrapper(async (req, res, next) => {
     const listOfBooks = await Book.find();
-    res
-      .status(200).json(listOfBooks);
+    res.status(200).json(listOfBooks);
   })
 );
 
@@ -18,8 +17,7 @@ router.get(
   asyncWrapper(async (req, res, next) => {
     const selectedBook = await Book.findById(req.params.id);
 
-    res
-      .status(200).json(selectedBook);
+    res.status(200).json(selectedBook);
   })
 );
 
@@ -28,10 +26,7 @@ router.post(
   asyncWrapper(async (req, res, next) => {
     const newBook = new Book(req.body);
     await newBook.save();
-
-    res
-      .status(200)
-      .json({ message: `created a new book using data from ${req.body}` });
+    res.status(201).json(req.body);
   })
 );
 
@@ -39,15 +34,14 @@ router.put(
   "/:id",
   asyncWrapper(async (req, res, next) => {
     const updateBook = await Book.findByIdAndUpdate(req.body);
-    res
-      .status(200).json(updateBook);
+    res.status(200).json(updateBook);
   })
 );
 
 router.delete(
   "/:id",
   asyncWrapper(async (req, res, next) => {
-    const deletedBook = await Book.findByIdAndDelete(req.params.id);
+    await Book.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: `delete book with id ${req.params.id}` });
   })
 );
