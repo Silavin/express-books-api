@@ -31,12 +31,12 @@ async function addFakeBooks() {
 
   const book1 = new Book({
     title: "hihi",
-    author: `${savedAuthor1._id}`
+    author: savedAuthor1._id
   });
 
   const book2 = new Book({
     title: "Greetings",
-    author: `${savedAuthor2._id}`
+    author: savedAuthor2._id
   });
 
   const saveBook1 = await book1.save();
@@ -73,18 +73,16 @@ beforeEach(async () => {
 test("POST /books should create a new book", async () => {
   const mockBook = {
     title: "Grad",
-    author: listOfBooks.book1.author._id
+    author: listOfBooks.book1.author.id
   };
 
   const response = await request(app)
     .post("/books")
     .send(mockBook);
-
-  console.log(response);
-
+  console.log(response.body);
   expect(response.status).toBe(201);
   expect(response.body.title).toEqual(mockBook.title);
-  expect(response.body.author).toEqual(mockAuthor.author);
+  expect(response.body.author).toEqual(mockBook.author);
 });
 
 test.skip("PUT /books/:id should update selected book", async () => {
