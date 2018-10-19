@@ -87,33 +87,30 @@ test("POST /books should create a new book", async () => {
 
 test("PUT /books/:id should update selected book", async () => {
   const mockBook = {
-    title: "Grad",
-    author: listOfBooks.book1.author
+    title: "Grad"
   };
   const response = await request(app)
-    .put(`/authors/${listOfBooks.book1.toString()}`)
+    .put(`/books/${listOfBooks.book1._id}`)
     .send(mockBook);
+  console.log(listOfBooks);
+  console.log(response.body);
 
-  // expect(response.status).toBe(200);
-  // expect(response.body).toEqual(mockBook);
+  expect(response.status).toBe(200);
+  expect(response.body.title).toEqual(mockBook.title);
 });
 
-test.skip("DELETE /books/:id should delete selected book", async () => {
+test("DELETE /books/:id should delete selected book", async () => {
   const response = await request(app).delete(
-    `/books/${listOfBooks.book1.author._id}`
+    `/books/${listOfBooks.book2.author}`
   );
-  const response2 = await request(app).get("/books");
+
   expect(response.status).toBe(200);
-  expect(response2.body.length).toEqual(2);
+  expect(response.body.message).toEqual("book has been deleted");
 });
 
-test.skip("GET /authors/:id should retrieve selected author", async () => {
-  const response = await request(app).get(
-    `/authors/${listOfAuthors.firstAuthor._id}`
-  );
+test("GET /books/:id should retrieve selected book", async () => {
+  const response = await request(app).get(`/books/${listOfBooks.book1.id}`);
 
   expect(response.status).toBe(200);
-  expect(response.body.name).toEqual(listOfAuthors.firstAuthor.name);
-  expect(response.body.email).toEqual(listOfAuthors.firstAuthor.email);
-  expect(response.body.password).toEqual(listOfAuthors.firstAuthor.password);
+  expect(response.body.title).toEqual(listOfBooks.book1.title);
 });

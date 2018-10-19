@@ -33,7 +33,9 @@ router.post(
 router.put(
   "/:id",
   asyncWrapper(async (req, res, next) => {
-    const updateBook = await Book.findByIdAndUpdate(req.body);
+    const updateBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    });
     res.status(200).json(updateBook);
   })
 );
@@ -42,7 +44,7 @@ router.delete(
   "/:id",
   asyncWrapper(async (req, res, next) => {
     await Book.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: `delete book with id ${req.params.id}` });
+    res.status(200).json({ message: `book has been deleted` });
   })
 );
 
